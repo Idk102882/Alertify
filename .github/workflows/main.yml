@@ -9,8 +9,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Add JitPack repository
-        run: sed -i "s|jcenter()|jcenter()\n        maven { url 'https://jitpack.io' }|g" build.gradle
+      - name: Fix hyperlog repository and coordinates
+        run: |
+          sed -i "s|com.hypertrack:hyperlog:0.0.10|com.github.hypertrack:hyperlog-android:0.0.10|g" app/build.gradle
+          sed -i "s|mavenCentral()|mavenCentral()\n        maven { url 'https://jitpack.io' }|g" build.gradle app/build.gradle
       - run: chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
